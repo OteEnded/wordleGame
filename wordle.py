@@ -46,6 +46,7 @@ while not correct:
                 if i == j:
                     tmp_ls[j] = "🟩"
                     guess[j] = "-"
+                    break
                 else:
                     tmp_ls[j] = "🟨"
                     guess[j] = "-"
