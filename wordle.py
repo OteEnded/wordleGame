@@ -1,4 +1,4 @@
-target = list("hello".lower())
+target = list("quotes".lower())
 
 correct = False
 letter_corr = 0
@@ -41,16 +41,16 @@ while not correct:
             tmp_ls[i] = "🟩"
         correct = True
     for i in range(len(target)):
+        if guess[i] == target[i]:
+            tmp_ls[i] = "🟩"
+            guess[i] = "-"
+            target[i] = "*"
+    for i in range(len(target)):
         for j in range(len(guess)):
             if target[i] == guess[j]:
-                if i == j:
-                    tmp_ls[j] = "🟩"
-                    guess[j] = "-"
-                    break
-                else:
-                    tmp_ls[j] = "🟨"
-                    guess[j] = "-"
-                    break
+                tmp_ls[j] = "🟨"
+                guess[j] = "-"
+                break
     ls[count] = tmp_ls[:]
     if correct:
         for i in range(6-count-1):
@@ -62,7 +62,8 @@ while not correct:
             tmp_ls[i] = "🟥"    
     if count == 6 and not correct:
         print("The number you can try is limited, try again later.")
-        break         
+        break
+    target = verified_target[:]         
 if correct:
     print("===================================================")
     print("Congratuations, please wating for next word target.")
