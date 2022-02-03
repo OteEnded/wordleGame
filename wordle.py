@@ -8,7 +8,33 @@ def clues():
 def line():
     print("===================================================")
     return
-target = list("quotes".lower())
+def get_word(m = 3, M = 6): 
+    w_list = ["amogus"] 
+    response_a = requests.get("https://zenquotes.io/api/random") 
+    json_data_a = json.loads(response_a.text) 
+    word_a = json_data_a[0]['q'].split() 
+    for i in word_a: 
+        if len(i) >= m and len(i) <= M: 
+            if i.isalpha() and i.islower(): 
+                w_list.append(i)
+    a = random.choice(w_list[1:]) 
+    response_b = requests.get(f"https://api.datamuse.com/words?ml={a}") 
+    json_data_b = json.loads(response_b.text) 
+    for j in range(len(json_data_b)): 
+        i = json_data_b[j]["word"] 
+        if len(i) >= m and len(i) <= M: 
+            if i.isalpha() and i.islower(): 
+                w_list.append(i)
+    return random.choice(w_list)
+
+import random
+import requests
+import json
+
+
+
+wordle_target = get_word(5,7)
+target = list(wordle_target)
 correct = False
 ls = []
 temp_ls = []
@@ -71,9 +97,9 @@ while not correct:
         for i in range(len(target)):
             for j in range(len(guess)):
                 if target[i] == guess[j]:
-                    if alpha1[i].lower() == guess[j]:
+                    if guess[j].upper() in alpha1:
                         clue1[alpha1.index(guess[j].upper())] = "🟨"
-                    elif alpha2[i].lower() == guess[j]:
+                    elif guess[j].upper() in alpha2:
                         clue2[alpha2.index(guess[j].upper())] = "🟨"
                     tmp_ls[j] = "🟨"
                     guess[j] = "-"
@@ -100,6 +126,8 @@ while not correct:
             tmp_ls[i] = "🟥"    
     if count == 6 and not correct:
         print("The number you can try is limited, try again later.")
+        print('''          The target's word is "{}".             '''.format("".join(verified_target)))
+        line()
         break
     target = verified_target[:]         
 if correct:
