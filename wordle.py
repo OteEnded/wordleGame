@@ -34,7 +34,7 @@ import json
 
 
 wordle_target = get_word(5,7)
-target = list("amogus")
+target = list(wordle_target)
 correct = False
 ls = []
 temp_ls = []
