@@ -34,7 +34,7 @@ import json
 
 
 wordle_target = get_word(5,7)
-target = list(wordle_target)
+target = list("amogus")
 correct = False
 ls = []
 temp_ls = []
@@ -97,9 +97,9 @@ while not correct:
         for i in range(len(target)):
             for j in range(len(guess)):
                 if target[i] == guess[j]:
-                    if guess[j].upper() in alpha1:
+                    if guess[j].upper() in alpha1 and clue1[alpha1.index(guess[j].upper())] != "🟩":
                         clue1[alpha1.index(guess[j].upper())] = "🟨"
-                    elif guess[j].upper() in alpha2:
+                    elif guess[j].upper() in alpha2 and clue2[alpha2.index(guess[j].upper())] != "🟩":
                         clue2[alpha2.index(guess[j].upper())] = "🟨"
                     tmp_ls[j] = "🟨"
                     guess[j] = "-"
