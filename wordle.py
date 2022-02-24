@@ -8,32 +8,39 @@ def clues():
 def line():
     print("===================================================")
     return
-def get_word(m = 3, M = 6): 
-    w_list = ["amogus"] 
-    response_a = requests.get("https://zenquotes.io/api/random") 
-    json_data_a = json.loads(response_a.text) 
-    word_a = json_data_a[0]['q'].split() 
-    for i in word_a: 
-        if len(i) >= m and len(i) <= M: 
-            if i.isalpha() and i.islower(): 
-                w_list.append(i)
-    a = random.choice(w_list[1:]) 
-    response_b = requests.get(f"https://api.datamuse.com/words?ml={a}") 
-    json_data_b = json.loads(response_b.text) 
-    for j in range(len(json_data_b)): 
-        i = json_data_b[j]["word"] 
-        if len(i) >= m and len(i) <= M: 
-            if i.isalpha() and i.islower(): 
-                w_list.append(i)
-    return random.choice(w_list)
+def get_word(m, M): 
+    w_list = words.words()
+    for_random = []
+    for i in w_list:
+        if len(i) >= m and len(i) <= M :
+            for_random.append(i)
+    return random.choice(for_random)
+    # w_list = ["amogus"] 
+    # response_a = requests.get("https://zenquotes.io/api/random") 
+    # json_data_a = json.loads(response_a.text) 
+    # word_a = json_data_a[0]['q'].split() 
+    # for i in word_a: 
+    #     if len(i) >= m and len(i) <= M: 
+    #         if i.isalpha() and i.islower(): 
+    #             w_list.append(i)
+    # a = random.choice(w_list[1:]) 
+    # response_b = requests.get(f"https://api.datamuse.com/words?ml={a}") 
+    # json_data_b = json.loads(response_b.text) 
+    # for j in range(len(json_data_b)): 
+    #     i = json_data_b[j]["word"] 
+    #     if len(i) >= m and len(i) <= M: 
+    #         if i.isalpha() and i.islower(): 
+    #             w_list.append(i)
+    # return random.choice(w_list)
 
 import random
 import requests
 import json
+from nltk.corpus import words
 
 
 
-wordle_target = get_word(5,7)
+wordle_target = get_word(4,6)
 target = list(wordle_target)
 correct = False
 ls = []
@@ -65,6 +72,15 @@ count = 0
 while not correct:  
     guess = list(input("Enter your guess word(could be meaningless): ").lower())
     line()
+    if "".join(guess) not in words.words() :
+        print("")
+        for i in range(len(ls)):
+                print(f"         "," ".join(ls[i]))
+        clues()
+        line()
+        print("        There is no this word in library.")
+        line()
+        continue
     if len(guess) != len(target):
         print("")
         for i in range(len(ls)):
