@@ -34,8 +34,6 @@ def get_word(m, M):
     # return random.choice(w_list)
 
 import random
-import requests
-import json
 from nltk.corpus import words
 
 
@@ -70,7 +68,7 @@ for i in range(len(tmp_ls)):
     tmp_ls[i] = "🟥"
 count = 0
 while not correct:  
-    guess = list(input("Enter your guess word(could be meaningless): ").lower())
+    guess = list(input("Enter your guess word : ").lower())
     line()
     if "".join(guess) not in words.words() :
         print("")
